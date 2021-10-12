@@ -1,0 +1,12 @@
+.customText {
+  color: orange;
+  border: 1px solid orange;
+  padding: 20px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.customText:hover {
+  color: white;
+  background-color: orange;
+}

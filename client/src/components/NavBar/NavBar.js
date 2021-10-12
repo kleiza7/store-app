@@ -6,8 +6,8 @@ const NavBar = () => {
     return (
         <Container className={classes.navBar}>
             <h6 className={classes.header}>Satış Uygulaması</h6>
-            <Link to="/sale">Satış Sayfası</Link>&nbsp;
-            <Link to="/customers">Müşteri Bilgileri Sayfası</Link>
+            <Container className={classes.linksContainer}><Link to="/sale" className={classes.link}>Satış Sayfası</Link>&nbsp;
+            <Link to="/customers" className={classes.link}>Müşteri Bilgileri Sayfası</Link></Container>
         </Container>
     )
 }

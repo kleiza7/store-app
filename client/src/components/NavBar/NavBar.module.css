@@ -7,3 +7,19 @@
 .header {
   font-size: 100px;
 }
+
+.link {
+  text-decoration: none;
+  color: white;
+  background-color: black;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.link:hover {
+  color: white;
+}
+
+.linksContainer {
+  margin-top: 100px;
+}

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import {getAllProducts} from "../../actions/products";
 import { Button, Form, Label, FormGroup, Container, Col, Input, Row} from 'reactstrap';
 import { addCustomer } from '../../actions/customers';
+import classes from "./Sale.module.css";
 const Sale = () => {
     
   const products = useSelector(state => state.products);
@@ -79,15 +80,14 @@ const Sale = () => {
                 setCurrentBrand(-1)
                 setCurrentModel(-1)
                 setCurrentProduct(product.id - 1)
-                
               }
-                }>{product.name}</h4>)}
+                } className={classes.customText}>{product.name}</h4>)}
               </Col>
-              <Col>{currentProduct !== -1 ?  products[currentProduct].brands.map(brand => <h4  onClick={() => {
+              <Col>{currentProduct !== -1 ?  products[currentProduct].brands.map(brand => <h4 className={classes.customText} onClick={() => {
                 setCurrentModel(-1)
                 setCurrentBrand(brand.id -1 )}}>{brand.brand}</h4>) : null}</Col>
-              <Col>{currentBrand !== -1 ? products[currentProduct].brands[currentBrand].modelsPrices.map(mp => <h4 onClick={() => setCurrentModel(mp.id -1)}>{mp.model}</h4>) : null}</Col>
-              <Col>{currentModel !== -1 ? <h4>{products[currentProduct].brands[currentBrand].modelsPrices[currentModel].price}</h4> : null}</Col>
+              <Col>{currentBrand !== -1 ? products[currentProduct].brands[currentBrand].modelsPrices.map(mp => <h4 onClick={() => setCurrentModel(mp.id -1)} className={classes.customText}>{mp.model}</h4>) : null}</Col>
+              <Col>{currentModel !== -1 ? <h4 className={classes.customText}>{products[currentProduct].brands[currentBrand].modelsPrices[currentModel].price}</h4> : null}</Col>
               </Row>
               <Button onClick={() => setIsBuy(true)} disabled={currentProduct !== -1 && currentBrand !== -1 && currentModel !== -1 ? false : true}>Form Oluştur</Button>
               {isBuy && <Form onSubmit={submitHandler}>
