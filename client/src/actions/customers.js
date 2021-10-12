@@ -28,7 +28,7 @@ export const addCustomer = (formData) => async(dispatch) => {
         if(localStorage.getItem("customers") === null){
             customers = []
             customers[0] = formData;
-        }else{ //localStorage boş değilse kontrol ediyor
+        }else{
             customers = JSON.parse(localStorage.getItem("customers"))
             customers.forEach(customer => {
                 if(customer.name === formData.name) isThere=true;
