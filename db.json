@@ -1,0 +1,61 @@
+{"customers":[
+  {
+    "id": 1,
+    "name":"ahmet",
+    "address":"lorem ipsum dolor sit amet",
+    "boughtProducts":[]
+  },
+{
+    "id": 2,
+    "name":"mehmet",
+    "address":"lorem ipsum dolor sit amet",
+    "boughtProducts":[]
+  },
+{
+    "id": 3,
+    "name":"veli",
+    "address":"lorem ipsum dolor sit amet",
+    "boughtProducts":[]
+  }],
+"products":[
+  {
+    "id":1, 
+    "name":"buzdolabı",
+    "brands":[
+      {"id":1, "brand":"marka1", "modelsPrices":[{"id":1, "model":"model1", "price":1000},{"id":2, "model":"model2", "price":2000},{"id":3, "model":"model3", "price":3000}]},
+      {"id":2, "brand":"marka2", "modelsPrices":[{"id":1, "model":"model4", "price":4000},{"id":2, "model":"model5", "price":5000},{"id":3, "model":"model6", "price":6000}]},
+      {"id":3, "brand":"marka3", "modelsPrices":[{"id":1, "model":"model7", "price":7000},{"id":2, "model":"model8", "price":8000},{"id":3, "model":"model9", "price":9000}]}
+  ]},
+  {
+    "id":2, 
+    "name":"tv", 
+    "brands":[
+      {"id":1, "brand":"marka4", "modelsPrices":[{"id":1, "model":"model1", "price":10000},{"id":2, "model":"model2", "price":11000},{"id":3, "model":"model3", "price":12000}]},
+      {"id":2, "brand":"marka5", "modelsPrices":[{"id":1, "model":"model4", "price":13000},{"id":2, "model":"model5", "price":14000},{"id":3, "model":"model6", "price":15000}]},
+      {"id":3, "brand":"marka6", "modelsPrices":[{"id":1, "model":"model7", "price":16000},{"id":2, "model":"model8", "price":17000},{"id":3, "model":"model9", "price":18000}]}
+  ]},
+  {
+    "id":3, 
+    "name":"çamaşır makinesi", 
+    "brands":[
+      {"id":1, "brand":"marka7", "modelsPrices":[{"id":1, "model":"model1", "price":2000},{"id":2, "model":"model2", "price":3000},{"id":3, "model":"model3", "price":4000}]},
+      {"id":2, "brand":"marka8", "modelsPrices":[{"id":1, "model":"model4", "price":2000},{"id":2, "model":"model5", "price":3000},{"id":3, "model":"model6", "price":4000}]},
+      {"id":3, "brand":"marka9", "modelsPrices":[{"id":1, "model":"model7", "price":2000},{"id":2, "model":"model8", "price":3000},{"id":3, "model":"model9", "price":4000}]}
+  ]},
+  {
+    "id":4, 
+    "name":"bulaşık makinesi", 
+    "brands":[
+      {"id":1, "brand":"marka10", "modelsPrices":[{"id":1, "model":"model1", "price":2000},{"id":2, "model":"model2", "price":3000},{"id":3, "model":"model3", "price":4000}]},
+      {"id":2, "brand":"marka11", "modelsPrices":[{"id":1, "model":"model4", "price":2000},{"id":2, "model":"model5", "price":3000},{"id":3, "model":"model6", "price":4000}]},
+      {"id":3, "brand":"marka12", "modelsPrices":[{"id":1, "model":"model7", "price":2000},{"id":2, "model":"model8", "price":3000},{"id":3, "model":"model9", "price":4000}]}
+  ]},
+  {
+    "id":5, 
+    "name":"kurutma makinesi", 
+    "brands":[
+      {"id":1, "brand":"marka13", "modelsPrices":[{"id":1, "model":"model1", "price":2000},{"id":2, "model":"model2", "price":3000},{"id":3, "model":"model3", "price":4000}]},
+      {"id":2, "brand":"marka14", "modelsPrices":[{"id":1, "model":"model4", "price":2000},{"id":2, "model":"model5", "price":3000},{"id":3, "model":"model6", "price":4000}]},
+      {"id":3, "brand":"marka15", "modelsPrices":[{"id":1, "model":"model7", "price":2000},{"id":2, "model":"model8", "price":3000},{"id":3, "model":"model9", "price":4000}]}
+  ]}
+]}
