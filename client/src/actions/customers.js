@@ -28,12 +28,16 @@ export const addCustomer = (formData) => async(dispatch) => {
         if(localStorage.getItem("customers") === null){
             customers = []
             customers[0] = formData;
-        }else{ //localStorage Boş değilse
+        }else{ //localStorage boş değilse kontrol ediyor
             customers = JSON.parse(localStorage.getItem("customers"))
             customers.forEach(customer => {
                 if(customer.name === formData.name) isThere=true;
             })
             if(isThere){
+                let installmentArr =[]; 
+                for(let i =0;i<formData.receivedProducts[0].installment;i++){
+                    installmentArr.push(false);
+                }
                     let product = {
                         name:formData.receivedProducts[0].name,
                         brand:formData.receivedProducts[0].brand,
@@ -42,7 +46,8 @@ export const addCustomer = (formData) => async(dispatch) => {
                         installment:formData.receivedProducts[0].installment,
                         payment:formData.receivedProducts[0].payment,
                         remainingDebt:formData.receivedProducts[0].remainingDebt,
-                        firstInstallment : formData.receivedProducts[0].firstInstallment
+                        firstInstallment : formData.receivedProducts[0].firstInstallment,
+                        remainingInstallment : installmentArr
                     }
                     console.log(product)
                     customers.forEach(customer => {
@@ -60,5 +65,42 @@ export const addCustomer = (formData) => async(dispatch) => {
     }
     catch(error){
         console.log(error);
+    }
+}
+
+export const payInstallment = (isPaidInstallment, price, customerName, productName, firstInstallment) => async(dispatch) => {
+    try{
+    let customers = JSON.parse(localStorage.getItem("customers"));
+    if(customers.length !== 0){
+        customers.forEach(customer => {
+            if(customer.name === customerName){
+                customer.receivedProducts.forEach(product => {
+                    if(product.name === productName && product.firstInstallment === firstInstallment){
+                        if(!isPaidInstallment){
+                            if(product.remainingDebt - price < 0){
+                                product.remainingDebt = 0;
+                            }else{
+                            product.remainingDebt -= price;
+                            }
+
+                            for(let i =0;i<product.remainingInstallment.length;i++){
+                                if(product.remainingInstallment[i] === false)
+                                {
+                                    product.remainingInstallment[i] = true;
+                                    break;
+                                }
+                            }
+                        }
+                        
+                    }
+                })
+            }
+        })
+    }
+
+    localStorage.setItem("customers", JSON.stringify(customers));
+    dispatch({type:FETCH_ALL_CUSTOMERS, payload:customers});
+    }catch(error){
+        console.log(error)
     }
 }

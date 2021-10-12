@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { useSelector, useDispatch } from "react-redux";
-import { getAllCustomers } from "../../actions/customers";
-import { Container, Col, Row, Dropdown, Table, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { getAllCustomers, payInstallment} from "../../actions/customers";
+import { Container, Col, Row, Input, Dropdown, Table, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 const CustomerInfos = ({currentCustomer, setCurrentCustomer}) => {
   const customers = useSelector(state => state.customers);
@@ -15,6 +15,13 @@ const CustomerInfos = ({currentCustomer, setCurrentCustomer}) => {
     dispatch(getAllCustomers());
   }, [dispatch])
 
+    const changeInstallment = (isPaidInstallment, name, product) => {
+      let customerName = name;
+      let price = ((product.price-product.payment)/product.installment);
+      let productName = product.name
+      let firstInstallment = product.firstInstallment;
+      dispatch(payInstallment(isPaidInstallment, price, customerName, productName, firstInstallment));
+    }
     return (
         <Container>
             <Row>
@@ -41,6 +48,7 @@ const CustomerInfos = ({currentCustomer, setCurrentCustomer}) => {
           <th>Ürün modeli</th>
           <th>Ürün fiyatı</th>
           <th>İlk Taksit</th>
+          <th>Kalan Taksit</th>
           <th>Kalan Borç</th>
         </tr>
       </thead>
@@ -57,6 +65,7 @@ const CustomerInfos = ({currentCustomer, setCurrentCustomer}) => {
             <td>{product.model}</td>
             <td>{product.price}</td>
             <td>{product.firstInstallment}</td>
+            <td>{product.remainingInstallment.map(isPaidInstallment => isPaidInstallment ? <Input type="checkbox" checked />: <Input onChange={() => changeInstallment(isPaidInstallment, currentCustomer.name, product)} type="checkbox" />)}</td>
             <td>{product.remainingDebt}</td>
 
             </tr>
@@ -66,7 +75,7 @@ const CustomerInfos = ({currentCustomer, setCurrentCustomer}) => {
       </tbody>
     </Table>
                 </Col>
-            
+               
     </Row>
         </Container>
     )

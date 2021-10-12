@@ -36,6 +36,8 @@ const Sale = () => {
       let date = new Date();
       date.setMonth(date.getMonth()+1)
       let newDate = date.toLocaleDateString("en-US")
+      let installmentArr = installmentArray(Number(formState.installment));
+      console.log(installmentArr);
       console.log(newDate)
       const newState = {name:formState.name, address:formState.address, receivedProducts:[{
         name:products[currentProduct].name,
@@ -44,8 +46,9 @@ const Sale = () => {
         price : products[currentProduct].brands[currentBrand].modelsPrices[currentModel].price,
         installment:formState.installment,
         payment:formState.payment,
-        remainingDebt : products[currentProduct].brands[currentBrand].modelsPrices[currentModel].price,
+        remainingDebt : products[currentProduct].brands[currentBrand].modelsPrices[currentModel].price - formState.payment,
         firstInstallment : newDate,
+        remainingInstallment: installmentArr
       }]}
       
       dispatch(addCustomer(newState));
@@ -57,6 +60,14 @@ const Sale = () => {
                   installment:0,
                   payment:0
                 })
+    }
+
+    const installmentArray = (installment) => {
+      let arr = [];
+      for(let i=0;i<installment;i++){
+        arr.push(false)
+      }
+      return arr;
     }
     return (
           
@@ -78,7 +89,7 @@ const Sale = () => {
               <Col>{currentBrand !== -1 ? products[currentProduct].brands[currentBrand].modelsPrices.map(mp => <h4 onClick={() => setCurrentModel(mp.id -1)}>{mp.model}</h4>) : null}</Col>
               <Col>{currentModel !== -1 ? <h4>{products[currentProduct].brands[currentBrand].modelsPrices[currentModel].price}</h4> : null}</Col>
               </Row>
-              <Button onClick={() => setIsBuy(true)} disabled={currentProduct !== -1 && currentBrand !== -1 && currentModel !== -1 ? 0 : 1}>Form Oluştur</Button>
+              <Button onClick={() => setIsBuy(true)} disabled={currentProduct !== -1 && currentBrand !== -1 && currentModel !== -1 ? false : true}>Form Oluştur</Button>
               {isBuy && <Form onSubmit={submitHandler}>
                 <FormGroup row>
         <Label for="name" sm={2}>İsim</Label>
