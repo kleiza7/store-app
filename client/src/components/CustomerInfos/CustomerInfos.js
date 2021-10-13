@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import { useSelector, useDispatch } from "react-redux";
-import { getAllCustomers, payInstallment} from "../../actions/customers";
+import { getAllCustomers, payInstallment, deleteProductFromCustomer} from "../../actions/customers";
 import { Container, Col, Row, Input, Dropdown, Table, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import classes from "./CustomerInfos.module.css"
 
 const CustomerInfos = ({currentCustomer, setCurrentCustomer}) => {
   const customers = useSelector(state => state.customers);
+
   const dispatch = useDispatch();
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -22,20 +24,24 @@ const CustomerInfos = ({currentCustomer, setCurrentCustomer}) => {
       let firstInstallment = product.firstInstallment;
       dispatch(payInstallment(isPaidInstallment, price, customerName, productName, firstInstallment));
     }
+
+    const deleteProduct = (customerId, productId) => {
+      dispatch(deleteProductFromCustomer(customerId, productId));
+    }
     return (
         <Container>
             <Row>
-                <Col xs="3">
+                <Col xs="2">
                     <Dropdown isOpen={dropdownOpen} toggle={toggle}>
       <DropdownToggle caret>
         Müşteriler
       </DropdownToggle>
       <DropdownMenu>
-      {customers && customers.map(customer => <DropdownItem onClick={() => setCurrentCustomer(customer)}>{customer.name}</DropdownItem>)}
+      {customers && customers.map(customer => <DropdownItem key={customer._id} onClick={() => setCurrentCustomer(customer)}>{customer.name}</DropdownItem>)}
         
       </DropdownMenu>
     </Dropdown></Col>
-                <Col xs="9">
+                <Col xs="10">
                 <Table>
       <thead>
         <tr>
@@ -50,12 +56,15 @@ const CustomerInfos = ({currentCustomer, setCurrentCustomer}) => {
           <th>İlk Taksit</th>
           <th>Kalan Taksit</th>
           <th>Kalan Borç</th>
+          
+          
         </tr>
       </thead>
       <tbody>
         
           {currentCustomer.receivedProducts && currentCustomer.receivedProducts.map(product => (
-            <tr>
+            
+            <tr className={classes.customTableRow}>
             <td>{currentCustomer.name}</td>
             <td>{currentCustomer.address}</td>
             <td>{product.installment}</td>
@@ -64,11 +73,17 @@ const CustomerInfos = ({currentCustomer, setCurrentCustomer}) => {
             <td>{product.brand}</td>
             <td>{product.model}</td>
             <td>{product.price}</td>
-            <td>{product.firstInstallment}</td>
+            <td>{product.firstInstallment.split('T')[0]}</td>
             <td>{product.remainingInstallment.map(isPaidInstallment => isPaidInstallment ? <Input type="checkbox" checked />: <Input onChange={() => changeInstallment(isPaidInstallment, currentCustomer.name, product)} type="checkbox" />)}</td>
             <td>{product.remainingDebt}</td>
-
+            
+            <button  onClick={() => deleteProduct(currentCustomer._id, product._id)}className={classes.customButton}>sil</button>
             </tr>
+            
+            
+            
+            
+            
           ))}
         
        

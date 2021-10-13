@@ -1,0 +1,10 @@
+.customTableRow:hover {
+  background-color: gainsboro;
+}
+
+.customButton {
+  color: black;
+  border: 1px solid black;
+  background-color: white !important;
+  margin-top: 10px;
+}

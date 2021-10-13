@@ -33,27 +33,26 @@ const Sale = () => {
       setFormState({...formState, [name]:value});
     }
     const submitHandler = (e) => {
-      
+      e.preventDefault();
       let date = new Date();
       date.setMonth(date.getMonth()+1)
       let newDate = date.toLocaleDateString("en-US")
       let installmentArr = installmentArray(Number(formState.installment));
-      console.log(installmentArr);
-      console.log(newDate)
+      
       const newState = {name:formState.name, address:formState.address, receivedProducts:[{
-        name:products[currentProduct].name,
-        brand:products[currentProduct].brands[currentBrand].brand,
-        model:products[currentProduct].brands[currentBrand].modelsPrices[currentModel].model,
-        price : products[currentProduct].brands[currentBrand].modelsPrices[currentModel].price,
+        name:currentProduct.name,
+        brand:currentProduct.brands[currentBrand].brand,
+        model:currentProduct.brands[currentBrand].modelsPrices[currentModel].model,
+        price :currentProduct.brands[currentBrand].modelsPrices[currentModel].price,
         installment:formState.installment,
         payment:formState.payment,
-        remainingDebt : products[currentProduct].brands[currentBrand].modelsPrices[currentModel].price - formState.payment,
+        remainingDebt : currentProduct.brands[currentBrand].modelsPrices[currentModel].price - formState.payment,
         firstInstallment : newDate,
         remainingInstallment: installmentArr
       }]}
       
       dispatch(addCustomer(newState));
-
+      console.log(newState);
       setIsBuy(false)
       setFormState({
                   name:"",
@@ -70,26 +69,42 @@ const Sale = () => {
       }
       return arr;
     }
+
+    const changeProduct = (product) => {
+      setCurrentProduct(product)
+      setCurrentBrand(-1)
+      setCurrentModel(-1)
+    }
+
+    const changeBrand = (brandName) =>{
+      currentProduct.brands.forEach(brand => brand.brand === brandName && setCurrentBrand(currentProduct.brands.indexOf(brand)))
+      setCurrentModel(-1)
+    }
+
+    const changeModel = (modelName) => {
+      currentProduct.brands[currentBrand].modelsPrices.forEach(mp => mp.model === modelName && setCurrentModel(currentProduct.brands[currentBrand].modelsPrices.indexOf(mp)))
+    }
     return (
           
           <Container>
             <Row>
-              
               <Col>
-              {products.map(product => <h4 onClick={() => {
-                setCurrentBrand(-1)
-                setCurrentModel(-1)
-                setCurrentProduct(product.id - 1)
-              }
-                } className={classes.customText}>{product.name}</h4>)}
+              {products.map(product => <h4 onClick={() => changeProduct(product) } className={classes.customText} key={product._id}>{product.name}</h4>)}
               </Col>
-              <Col>{currentProduct !== -1 ?  products[currentProduct].brands.map(brand => <h4 className={classes.customText} onClick={() => {
-                setCurrentModel(-1)
-                setCurrentBrand(brand.id -1 )}}>{brand.brand}</h4>) : null}</Col>
-              <Col>{currentBrand !== -1 ? products[currentProduct].brands[currentBrand].modelsPrices.map(mp => <h4 onClick={() => setCurrentModel(mp.id -1)} className={classes.customText}>{mp.model}</h4>) : null}</Col>
-              <Col>{currentModel !== -1 ? <h4 className={classes.customText}>{products[currentProduct].brands[currentBrand].modelsPrices[currentModel].price}</h4> : null}</Col>
+              <Col>
+              {currentProduct.brands && currentProduct.brands.map(brand => (<h4 onClick={() => changeBrand(brand.brand)}className={classes.customText} key={brand._id}>{brand.brand}</h4>))}
+              </Col>
+              <Col>
+              {( currentBrand !== -1 && currentProduct.brands[currentBrand].modelsPrices) && currentProduct.brands[currentBrand].modelsPrices.map(mp => 
+                (<h4 onClick={() => changeModel(mp.model)} className={classes.customText} key={mp._id}>{mp.model}</h4>)
+                )}
+              </Col>
+              <Col>
+              {( currentModel !== -1 && currentProduct.brands[currentBrand].modelsPrices[currentModel]) && <h4 className={classes.customText}>{currentProduct.brands[currentBrand].modelsPrices[currentModel].price}</h4>}
+              </Col>
+              
               </Row>
-              <Button onClick={() => setIsBuy(true)} disabled={currentProduct !== -1 && currentBrand !== -1 && currentModel !== -1 ? false : true}>Form Oluştur</Button>
+              <Button onClick={() => setIsBuy(true)}>Form Oluştur</Button>
               {isBuy && <Form onSubmit={submitHandler}>
                 <FormGroup row>
         <Label for="name" sm={2}>İsim</Label>

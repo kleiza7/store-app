@@ -7,10 +7,7 @@ const getAllCustomers = asyncErrorWrapper(async(req, res, next) => {
     
     res
     .status(200)
-    .json({
-        success: true,
-        data: customers
-    });
+    .json(customers);
 });
 
 const addCustomer = asyncErrorWrapper(async(req, res, next) => {
@@ -23,16 +20,13 @@ const addCustomer = asyncErrorWrapper(async(req, res, next) => {
 
         let customer = await oldCustomer.save(); //böyle yazınca promise pending olarak bekliyor
         
-        res.status(200).json({success:true, data:customer})
+        res.status(200).json(customer)
         
     }else{
         const customers = await Customer.create(newCustomer);
         res
         .status(200)
-        .json({
-        success: true,
-        data: customers,
-    });
+        .json(customers);
     }
     
 });
@@ -63,9 +57,9 @@ const payInstallment = asyncErrorWrapper(async(req, res, next) => {
         })
 
         let newCustomer = await customer.save();
-        res.status(200).json({success:true, data:newCustomer})
+        res.status(200).json(newCustomer)
     }else{
-        res.status(400).json({success:false, message:"No customer found with this name."});
+        res.status(400).json("No customer found with this name.");
     }
     
     

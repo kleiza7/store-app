@@ -6,10 +6,7 @@ const getAllProducts = asyncErrorWrapper(async(req, res, next) => {
     const products = await Product.find();
     res
     .status(200)
-    .json({
-        success: true,
-        data: products
-    });
+    .json(products);
 });
 
 const addProduct = asyncErrorWrapper(async(req, res, next) => {
@@ -18,10 +15,7 @@ const addProduct = asyncErrorWrapper(async(req, res, next) => {
     
     res
     .status(200)
-    .json({
-        success: true,
-        data: products
-    });
+    .json(products);
 });
 
 
