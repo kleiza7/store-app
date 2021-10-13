@@ -8,10 +8,15 @@ export default(customers=[], action) => {
             return action.payload;
         
         case FETCH_ADDED_CUSTOMER:
+
             return customers.map((customer) => customer._id === action.payload._id ? action.payload : customer);
+
         case FETCH_PAID_CUSTOMER:
+
             return customers.map((customer) => customer._id === action.payload._id ? action.payload : customer);
+
         default:
+            
             return customers;
     }
 }
